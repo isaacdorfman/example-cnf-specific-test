@@ -1,0 +1,37 @@
+{
+  "identifier": {
+    "url": "http://test-network-function.com/tests/unit/assertion_error",
+    "version": "v1.0.0"
+  },
+  "description": "checks for RHEL version.",
+  "reelFirstStep": {
+    "execute": "if [ -e /etc/redhat-release ]; then cat /etc/redhat-release; else echo \"Unknown Base Image\"; fi\n",
+    "expect": [
+      "(?m)Red Hat Enterprise Linux Server release (\\d+\\.\\d+) \\((\\w+)\\)"
+    ],
+    "timeout": 2000000000
+  },
+  "resultContexts": [
+    {
+      "pattern": "(?m)Red Hat Enterprise Linux Server release (\\d+\\.\\d+) \\((\\w+)\\)",
+      "defaultResult": 1,
+      "composedAssertions": [
+        {
+          "assertions": [
+            {
+              "groupIdx": 1,
+              "condition": {
+                "type": "isInt"
+              }
+            }
+          ],
+          "logic": {
+            "type": "and"
+          }
+        }
+      ]
+    }
+  ],
+  "testResult": 0,
+  "testTimeout": 2000000000
+}
